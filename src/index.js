@@ -1,6 +1,6 @@
 const { init } = require('./web/server');
 const logger = require('./logger');
-const { connect } = require('./db');
+const { connect } = require('./db/index'); // ha van egy db.js akkor mellémegy
 
 async function startup() {
   try {
