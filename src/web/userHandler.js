@@ -5,7 +5,11 @@ const { jwtSecret } = require('../config');
 async function register(req, res) {
   const user = await users.register(req.body);
   // HAZI 3: keszitsetek egy jwt tokent es kuldjetek el a user mellet { token, user }
-  res.send(user);
+
+  const { email, password } = req.body;
+  const token = jwt.sign({ email }, jwtSecret);
+
+  res.send({ token, user });
 }
 
 async function login(req, res) {
