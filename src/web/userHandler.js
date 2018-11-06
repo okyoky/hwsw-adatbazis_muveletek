@@ -36,7 +36,13 @@ async function login(req, res) {
   res.cookie('token', token, { maxAge: 900000000, httpOnly: true }).end();
 } */
 
+async function me(req, res) {
+  const user = await users.findByEmail(req.user.email);
+  res.send(user);
+}
+
 module.exports = {
   register,
   login,
+  me,
 };

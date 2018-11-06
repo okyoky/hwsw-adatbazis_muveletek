@@ -3,7 +3,7 @@ const getCurrency = require('../currency');
 const {
   get, list, insert, update, remove,
 } = require('./expenseHandler');
-const { register, login } = require('./userHandler');
+const { register, login, me } = require('./userHandler');
 const auth = require('./auth/jwt');
 
 const publicRouter = Router();
@@ -33,6 +33,7 @@ privateRouter.delete('/expenses/:id', remove);
 // user related endpoints
 publicRouter.post('/register', register);
 publicRouter.post('/login', login);
+privateRouter.get('/me', me);
 
 // HAZI: keszitsetek egy GET /me endpointot ami autentikacio altal vedett
 // es az eppen bejelentkezve levo userrrel ter vissza
