@@ -1,7 +1,7 @@
 const users = require('../../db/user');
 
 async function jwtAuth(req, res, next) {
-  const { email, password } = req.body;
+  const { email } = req.body;
 
   try {
     // HAZI 1: szedjetek le a usert a db-bol es azt tegyetek fel a req.user-re
