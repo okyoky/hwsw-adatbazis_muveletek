@@ -1,5 +1,4 @@
-const jwt = require('jsonwebtoken');
-const { jwtSecret } = require('../../config');
+const users = require('../../db/user');
 
 async function jwtAuth(req, res, next) {
   const auth = req.headers.authorization;
@@ -8,16 +7,12 @@ async function jwtAuth(req, res, next) {
     return res.status(401).send({ message: 'Unauthorized, no data' });
   }
 
-  const [scheme, token] = auth.split(' ');
-
-  if (scheme !== 'Bearer' || !token) {
-    return res.status(401).send({ message: 'Unauthorized, invalid token' });
-  }
+  const credentials = new Buffer.from(auth.split(' ').pop(), 'base64').toString('ascii').split(':');
 
   try {
     // HAZI 1: szedjetek le a usert a db-bol es azt tegyetek fel a req.user-re
     // a token belseje helyett
-    req.user = jwt.verify(token, jwtSecret);
+    req.user = users.findByEmail(credentials[0]);
   } catch (err) {
     return res.status(401).send({ message: 'Unauthorized, invalid token' });
   }
